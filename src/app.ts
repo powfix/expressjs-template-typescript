@@ -1,10 +1,12 @@
 import express from 'express';
 import helmet from "helmet";
 import nocache from "nocache";
+import cors from "cors";
 
 const app = express();
 app.use(helmet());
 app.use(nocache());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello world');
