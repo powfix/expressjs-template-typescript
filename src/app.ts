@@ -1,8 +1,10 @@
 import express from 'express';
 import helmet from "helmet";
+import nocache from "nocache";
 
 const app = express();
 app.use(helmet());
+app.use(nocache());
 
 app.get('/', (req, res) => {
   res.send('Hello world');
