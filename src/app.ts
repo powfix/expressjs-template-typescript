@@ -28,4 +28,10 @@ app.listen(PORT, () => {
    🎉 Server listening on PORT ${PORT} 🎉
   ######################################
   `);
+
+  // Send application is ready
+  try {
+    // @ts-ignore
+    process.send('ready');
+  } catch (e) {}
 });
