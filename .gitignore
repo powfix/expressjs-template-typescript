@@ -1,5 +1,6 @@
 # No npm, Using yarn
 package-lock.json
+tmp
 
 ### Node template
 # Logs
