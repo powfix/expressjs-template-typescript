@@ -2,6 +2,10 @@
 package-lock.json
 tmp
 
+# Config files(exclude examples)
+config/*
+!config/*.example.*
+
 ### Node template
 # Logs
 logs
