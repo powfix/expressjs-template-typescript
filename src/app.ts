@@ -3,6 +3,7 @@ import helmet from "helmet";
 import nocache from "nocache";
 import cors from "cors";
 import bodyParser from "body-parser";
+import morgan from 'morgan';
 
 const app = express();
 
@@ -10,6 +11,13 @@ const app = express();
 app.use(helmet());
 app.use(nocache());
 app.use(cors());
+
+// Logging(Console)
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
 
 // Body Parser
 app.use(bodyParser.raw());
