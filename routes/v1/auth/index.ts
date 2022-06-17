@@ -4,7 +4,6 @@ import {authorization} from "../../../middlewares/authorization";
 const router = Router();
 router.use('/sign-in', require('./sign-in'));
 router.use('/sign-up', require('./sign-up'));
-router.use('/username', require('./username'));
 router.use('/password', require('./password'));
 
 router.use(authorization({}));
