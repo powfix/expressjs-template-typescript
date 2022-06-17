@@ -25,14 +25,14 @@ export class UuidUtils {
 	 * @param binary UUID
 	 * @returns {string|null} When binary not exists return null
 	 */
-	static toString(binary: BinaryType): string | null {
+	static toString(binary?: Buffer): string | null {
 		if (!binary) return null;
 		return UuidUtils.format(binaryToString(binary));
 	}
 
 	/** (UUID: string) to (UUID: Buffer) */
-	static toBuffer(uuid: string): Buffer | null {
-		if (!uuid) return null;
+	static toBuffer(uuid: string): Buffer | undefined {
+		if (!uuid) return;
 		if (typeof uuid !== 'string') {
 			console.warn('UuidUtils.toBuffer() uuid is not string type', uuid);
 		}
@@ -47,6 +47,6 @@ export class UuidUtils {
 	}
 }
 
-export function binaryToString(binary: BinaryType): string {
+export function binaryToString(binary: Buffer): string {
 	return Buffer.from(binary).toString('hex');
 }

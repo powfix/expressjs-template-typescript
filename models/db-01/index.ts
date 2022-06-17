@@ -1,12 +1,7 @@
-import {Sequelize} from 'sequelize';
-import config from '../../config/config.json';
+import '../../env';
+import {Sequelize, Options} from 'sequelize';
 
-export const sequelize = new Sequelize(
-  config.development.database,
-  config.development.username,
-  config.development.password,
-  {
-    host: config.development.host,
-    dialect: 'mysql2'
-  }
-)
+const env = process.env.NODE_ENV || 'development';
+const config = require('../../config/config')[env];
+
+export const sequelize = new Sequelize(config);

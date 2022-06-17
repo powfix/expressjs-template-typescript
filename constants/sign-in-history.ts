@@ -1,0 +1,5 @@
+export enum STATUS {
+  PROCESSING = 'PROCESSING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED'
+}

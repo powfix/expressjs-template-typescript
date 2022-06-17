@@ -1,9 +1,11 @@
+import './env';
 import express from 'express';
 import helmet from "helmet";
 import nocache from "nocache";
 import cors from "cors";
 import bodyParser from "body-parser";
 import morgan from 'morgan';
+import {sequelize} from "./models/db-01";
 
 const app = express();
 
@@ -25,23 +27,32 @@ app.use(bodyParser.text({limit: '4mb'}));
 app.use(bodyParser.json({limit: '4mb'}));
 app.use(bodyParser.urlencoded({extended: true, limit: '4mb'}));
 
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
-
 app.use(require('./routes'));
 
-const PORT: number = parseInt(process.env.PORT as string, 10) || 3000;
-app.listen(PORT, () => {
-  console.log(`
+const startServer = () => {
+  const PORT: number = parseInt(process.env.PORT as string, 10) || 3000;
+  app.listen(PORT, () => {
+    console.log(`
   ######################################
    🎉 Server listening on PORT ${PORT} 🎉
   ######################################
   `);
 
-  // Send application is ready
-  try {
-    // @ts-ignore
-    process.send('ready');
-  } catch (e) {}
+    // Send application is ready
+    try {
+      // @ts-ignore
+      process.send('ready');
+    } catch (e) {}
+  });
+};
+
+/** Authenticate check */
+console.info('☑️ Checking Database Authentication');
+sequelize.authenticate().then(() => {
+  console.log('✅ Authenticated');
+  if (sequelize.getDialect()) console.log('✅', sequelize.getDialect());
+  if (sequelize.getDatabaseName()) console.log('✅', sequelize.getDatabaseName());
+  startServer();
+}).catch((err) => {
+  console.error('Failed to check authenticate', err);
 });
