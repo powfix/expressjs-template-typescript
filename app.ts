@@ -6,6 +6,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import morgan from 'morgan';
 import {sequelize} from "./models/db-01";
+import {parseBoolean} from "./utils/BooleanUtils";
 
 const app = express();
 
@@ -46,13 +47,19 @@ const startServer = () => {
   });
 };
 
+
 /** Authenticate check */
-console.info('☑️ Checking Database Authentication');
-sequelize.authenticate().then(() => {
-  console.log('✅ Authenticated');
-  if (sequelize.getDialect()) console.log('✅', sequelize.getDialect());
-  if (sequelize.getDatabaseName()) console.log('✅', sequelize.getDatabaseName());
+const SKIP_AUTHENTICATE_CHECK = parseBoolean(process.env.SKIP_AUTHENTICATE_CHECK, false);
+if (SKIP_AUTHENTICATE_CHECK) {
   startServer();
-}).catch((err) => {
-  console.error('Failed to check authenticate', err);
-});
+} else {
+  console.info('☑️ Checking Database Authentication');
+  sequelize.authenticate().then(() => {
+    console.log('✅ Authenticated');
+    if (sequelize.getDialect()) console.log('✅', sequelize.getDialect());
+    if (sequelize.getDatabaseName()) console.log('✅', sequelize.getDatabaseName());
+    startServer();
+  }).catch((err) => {
+    console.error('Failed to check authenticate', err);
+  });
+}
