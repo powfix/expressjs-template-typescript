@@ -2,13 +2,13 @@
   "name": "expressjs-template-typescript",
   "version": "0.0.1",
   "description": "Express.js template with TypeScript",
-  "main": "index.js",
+  "main": "dist/app.js",
   "repository": "git@github.com:powfix/expressjs-template-typescript.git",
   "author": "Kwon Kyung-Min <powfix@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node dist/app.js",
-    "build": "tsc -p .",
+    "build": "rm -rf dist; tsc -p .",
     "dev": "nodemon --watch \"**/*.ts\" --exec \"ts-node\" app.ts"
   },
   "devDependencies": {
